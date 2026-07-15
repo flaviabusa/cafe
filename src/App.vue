@@ -1,7 +1,7 @@
 <template>
   <header class="navbar">
     <div class="logo">
-      Café
+      <img src="../public/grao-de-cafe.png" alt="grao-de-cafe"> Coffee Quality Challenge
     </div>
 
     <nav class="nav-links">
@@ -27,14 +27,22 @@ import { RouterLink, RouterView } from 'vue-router'
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 2rem;
   background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
   font-size: 1.5rem;
+  align-items: center;
   font-weight: bold;
-  color: rgb(141, 141, 141);
+  color: #320d0dc6;
+}
+
+.logo img{
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
 }
 
 .nav-links {
@@ -44,13 +52,19 @@ import { RouterLink, RouterView } from 'vue-router'
 
 .nav-item{
   color: black;
+  font-weight: 600;
   text-decoration: none;
 }
 
 .nav-item:hover,
 .nav-item.active{
   text-decoration: none;
-  color: rgb(48, 17, 17);
+  color: #320d0dc6;
+}
+
+.router-link-active {
+  color: #320d0dc6;
+  border-bottom: 2px solid #320d0dc6;
 }
 
 .conteudo{
