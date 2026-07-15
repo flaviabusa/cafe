@@ -23,6 +23,14 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <style scoped>
+
+:global(body) {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+} 
+
 .navbar {
   display: flex;
   justify-content: space-between;
