@@ -10,8 +10,8 @@
       </p>
     </div>
     <div>
-      <h1>Págian de Início - Cafés</h1>
-      <p>Bem-vindo a nossa página de início</p>
+      <h1>Campeonato de Avaliação de Qualidade de Café</h1>
+      <p>Avalie, compare e descubra os melhores cafés especiais</p>
     </div>
 
   </main>
@@ -33,5 +33,18 @@ main{
 
 div{
   margin: 20px;
+}
+
+h1{
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #320d0ddc;
+ 
+}
+
+p{
+  font-size: 1.2rem;
+  color: #320d0ddc;
+  
 }
 </style>
