@@ -1,173 +1,153 @@
 <script setup>
-import { reactive, computed } from "vue";
-import { coffees } from "@/data/coffees";
+import { ref, computed } from 'vue'
+import { coffees } from '@/data/coffees'
 
-const form = reactive({
-    nome: "",
-    produtor: "",
-    aroma: 0,
-    sabor: 0,
-    acidez: 0,
-    corpo: 0,
-    finalizacao: 0,
-    observacoes: "",
-});
+const nome = ref('')
+const produtor = ref('')
+const aroma = ref(0)
+const sabor = ref(0)
+const acidez = ref(0)
+const corpo = ref(0)
+const finalizacao = ref(0)
+const observacoes = ref('')
+const avaliador = ref('')
+
+const erro = ref('')
 
 const media = computed(() => {
     return (
-        (
-            Number(form.aroma) +
-            Number(form.sabor) +
-            Number(form.acidez) +
-            Number(form.corpo) +
-            Number(form.finalizacao)
-        ) / 5
-    ).toFixed(1);
-});
+        Number(aroma.value) +
+        Number(sabor.value) +
+        Number(acidez.value) +
+        Number(corpo.value) +
+        Number(finalizacao.value)
+    ) / 5
+})
+
+function limparFormulario() {
+    nome.value = ''
+    produtor.value = ''
+    aroma.value = 0
+    sabor.value = 0
+    acidez.value = 0
+    corpo.value = 0
+    finalizacao.value = 0
+    observacoes.value = ''
+    avaliador.value = ''
+    erro.value = ''
+}
 
 function salvarAvaliacao() {
 
-    // Validação dos campos obrigatórios
-    if (
-        form.nome.trim() === "" ||
-        form.produtor.trim() === "" ||
-        form.aroma === 0 ||
-        form.sabor === 0 ||
-        form.acidez === 0 ||
-        form.corpo === 0 ||
-        form.finalizacao === 0
-    ) {
-        alert("Preencha todos os campos obrigatórios!");
-        return;
+    if (nome.value == '' || produtor.value == '' || avaliador.value == '') {
+        erro.value = 'Preencha todos os campos obrigatórios.'
+        return
     }
 
-    // Validação das notas
-    if (
-        form.aroma < 0 || form.aroma > 10 ||
-        form.sabor < 0 || form.sabor > 10 ||
-        form.acidez < 0 || form.acidez > 10 ||
-        form.corpo < 0 || form.corpo > 10 ||
-        form.finalizacao < 0 || form.finalizacao > 10
-    ) {
-        alert("As notas devem estar entre 0 e 10.");
-        return;
+    const cafeExistente = coffees.value.find(coffee => coffee.nome === nome.value)
+
+    if (cafeExistente) {
+        cafeExistente.produtor = produtor.value
+        cafeExistente.aroma = Number(aroma.value)
+        cafeExistente.sabor = Number(sabor.value)
+        cafeExistente.acidez = Number(acidez.value)
+        cafeExistente.corpo = Number(corpo.value)
+        cafeExistente.finalizacao = Number(finalizacao.value)
+        cafeExistente.media = Number(media.value.toFixed(1))
+        cafeExistente.observacoes = observacoes.value
+        cafeExistente.avaliador = avaliador.value
+        cafeExistente.data = new Date().toLocaleDateString('pt-BR')
+    } 
+    else {
+        coffees.value.push({
+            id: coffees.value.length + 1,
+            nome: nome.value,
+            produtor: produtor.value,
+            aroma: Number(aroma.value),
+            sabor: Number(sabor.value),
+            acidez: Number(acidez.value),
+            corpo: Number(corpo.value),
+            finalizacao: Number(finalizacao.value),
+            media: Number(media.value.toFixed(1)),
+            observacoes: observacoes.value,
+            avaliador: avaliador.value,
+            data: new Date().toLocaleDateString('pt-BR')
+        })
     }
-
-    const cafe = coffees.value.find(
-        coffee => coffee.nome.toLowerCase() === form.nome.toLowerCase()
-    );
-
-    if (!cafe) {
-        alert("Café não encontrado!");
-        return;
-    }
-
-    cafe.produtor = form.produtor;
-    cafe.aroma = Number(form.aroma);
-    cafe.sabor = Number(form.sabor);
-    cafe.acidez = Number(form.acidez);
-    cafe.corpo = Number(form.corpo);
-    cafe.finalizacao = Number(form.finalizacao);
-    cafe.observacoes = form.observacoes;
-
-    cafe.media =
-        (
-            cafe.aroma +
-            cafe.sabor +
-            cafe.acidez +
-            cafe.corpo +
-            cafe.finalizacao
-        ) / 5;
-
-    alert("Avaliação salva com sucesso!");
-
-    limparFormulario();
-}
-
-function limparFormulario() {
-    form.nome = "";
-    form.produtor = "";
-    form.aroma = 0;
-    form.sabor = 0;
-    form.acidez = 0;
-    form.corpo = 0;
-    form.finalizacao = 0;
-    form.observacoes = "";
+    limparFormulario()
 }
 </script>
 
 <template>
-    <form class="rating-form" @submit.prevent="salvarAvaliacao">
+    <div class="form-card">
 
         <h2>Nova Avaliação</h2>
+        <p class="subtitulo">
+            Cadastre uma nova avaliação de café.
+        </p>
+        <p v-if="erro" class="erro">
+            {{ erro }}
+        </p>
 
-        <div class="campo">
-            <label>Nome do Café</label>
-            <input type="text" placeholder="Ex.: Bourbon Amarelo" v-model="form.nome" />
-        </div>
+        <label>Nome do Café *</label>
+        <input type="text" placeholder="Ex.: Bourbon Amarelo" v-model="nome">
 
-        <div class="campo">
-            <label>Produtor</label>
-            <input type="text" placeholder="Ex.: Fazenda Boa Vista" v-model="form.produtor" />
-        </div>
+        <label>Produtor *</label>
+        <input type="text" placeholder="Ex.: Fazenda Boa Vista" v-model="produtor">
 
-        <div class="notas">
+        <label>Avaliador *</label>
+        <input type="text" placeholder="Seu nome" v-model="avaliador">
 
-            <div class="campo-nota">
+        <h3>Notas SCA</h3>
+        <div class="grid-notas">
+            <div>
                 <label>Aroma</label>
-                <input type="number" min="0" max="10"  v-model="form.aroma" />
+                <input type="number" min="0" max="10" v-model="aroma">
             </div>
 
-            <div class="campo-nota">
+            <div>
                 <label>Sabor</label>
-                <input type="number" min="0" max="10"  v-model="form.sabor" />
+                <input type="number" min="0" max="10"  v-model="sabor">
             </div>
 
-            <div class="campo-nota">
+            <div>
                 <label>Acidez</label>
-                <input type="number" min="0" max="10" v-model="form.acidez" />
+                <input type="number" min="0" max="10" v-model="acidez">
             </div>
 
-            <div class="campo-nota">
+            <div>
                 <label>Corpo</label>
-                <input type="number" min="0" max="10" v-model="form.corpo" />
+                <input type="number" min="0" max="10" v-model="corpo">
             </div>
 
-            <div class="campo-nota">
+            <div>
                 <label>Finalização</label>
-                <input type="number" min="0" max="10" v-model="form.finalizacao" />
+                <input type="number" min="0" max="10" v-model="finalizacao">
             </div>
-
         </div>
 
-        <div class="campo">
-            <label>Observações</label>
-
-            <textarea rows="4" placeholder="Digite alguma observação..." v-model="form.observacoes"></textarea>
-        </div>
+        <label>Observações</label>
+        <textarea rows="4" placeholder="Descreva as características do café..." v-model="observacoes"></textarea>
 
         <div class="media">
-            <strong>Média SCA:</strong>
-            <span>{{ media }}</span>
+            <p>Média SCA</p>
+            <h2>{{ media.toFixed(1) }}</h2>
         </div>
 
         <div class="botoes">
-
-            <button type="button" class="limpar" @click="limparFormulario">
+            <button class="limpar" @click="limparFormulario">
                 Limpar
             </button>
 
-            <button type="submit" class="salvar">
+            <button class="salvar" @click="salvarAvaliacao">
                 Salvar Avaliação
             </button>
-
         </div>
-
-    </form>
+    </div>
 </template>
 
 <style scoped>
-.rating-form {
+.form-card {
     background: white;
     padding: 25px;
     border-radius: 12px;
@@ -176,18 +156,26 @@ function limparFormulario() {
 
 h2 {
     margin-top: 0;
+    margin-bottom: 5px;
     color: #320d0d;
 }
 
-.campo {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 18px;
+.subtitulo {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.erro {
+    color: red;
+    margin-bottom: 15px;
+    font-size: 14px;
 }
 
 label {
     font-weight: 600;
     margin-bottom: 6px;
+    display: block;
+    color: #320d0d;
 }
 
 input,
@@ -200,14 +188,18 @@ textarea {
     box-sizing: border-box;
 }
 
-.notas {
+textarea {
+    resize: none;
+}
+
+.grid-notas {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.campo-nota {
+.grid-notas div {
     display: flex;
     flex-direction: column;
 }
@@ -222,10 +214,15 @@ textarea {
     align-items: center;
 }
 
-.media span {
-    font-size: 24px;
+.media p {
+    margin: 0;
+    font-weight: 600;
+}
+
+.media h2 {
+    margin: 0;
     color: #320d0d;
-    font-weight: bold;
+    font-size: 26px;
 }
 
 .botoes {
@@ -261,25 +258,34 @@ button {
 
 /* Tablet */
 @media (max-width: 992px) {
-    .notas {
+    .grid-notas {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 /* Celular */
 @media (max-width: 768px) {
-
-    .rating-form {
+    .form-card {
         padding: 20px;
     }
-    .notas {
+
+    .grid-notas {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .media {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
     .botoes {
         flex-direction: column;
     }
+
     button {
         width: 100%;
     }
 }
+
 </style>

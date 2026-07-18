@@ -3,37 +3,108 @@ defineProps(['coffee'])
 </script>
 
 <template>
-  <div class="coffee-card">
-    <h2>{{ coffee.nome }}</h2>
 
-    <p><strong>Origem:</strong> {{ coffee.origem }}</p>
+<div class="coffee-card">
 
-    <p v-if="coffee.produtor">
-      <strong>Produtor:</strong> {{ coffee.produtor }}
-    </p>
+    <div class="icone">
+        <img src="/grao-de-cafe.png" alt="Café">
+    </div>
 
-    <p class="média" v-if="coffee.media">
-      <strong>Média:</strong> {{ coffee.media.toFixed(1) }}
-    </p>
-  </div>
+    <div class="informacoes">
+        <h3>{{ coffee.nome }}</h3>
+
+        <p>
+            <strong>Produtor:</strong>
+            {{ coffee.produtor }}
+        </p>
+
+        <p class="data">
+            Avaliado em: {{ coffee.data }}
+        </p>
+    </div>
+
+    <div class="media">
+        <span>Média SCA</span>
+        <h2>{{ coffee.media.toFixed(1) }}</h2>
+    </div>
+</div>
 </template>
 
 <style scoped>
-.coffee-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+
+.coffee-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    background:white;
+    margin-bottom:15px;
 }
 
-h2{
-  margin-top:0;
-  color:#320d0d;
+.icone{
+    width:70px;
+    height:70px;
+    border-radius:10px;
+    background:#faf7f4;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-right:18px;
 }
 
-p{
-  margin:8px 0;
+.icone img{
+    width:36px;
 }
 
+.informacoes{
+    flex:1;
+}
 
+.informacoes h3{
+    margin:0;
+    color:#3d2215;
+}
+
+.informacoes p{
+    margin:5px 0;
+    color:#555;
+}
+
+.data{
+    font-size:14px;
+    color:#888
+}
+
+.media{
+    text-align:center;
+}
+
+.media span{
+    font-size:14px;
+    color:#666;
+}
+
+.media h2{
+    margin-top:5px;
+    color:#2d6b2d;
+    font-size:34px;
+}
+
+@media(max-width:768px){
+
+.coffee-card{
+    flex-direction:column;
+    text-align:center;
+}
+
+.icone{
+    margin:0 0 15px 0;
+}
+
+.media{
+    margin-top:15px;
+}
+}
 </style>

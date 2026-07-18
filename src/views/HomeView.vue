@@ -5,15 +5,13 @@ import { RouterLink } from "vue-router";
 
 const totalCafes = computed(() => coffees.value.length);
 
-const cafesAvaliados = computed(() => {
-  return coffees.value.filter(cafe => cafe.media > 0).length;
-});
+const melhorCafe = computed(() => {
+  return [...coffees.value].sort((a, b) => b.media - a.media)[0];
+})
 
-const melhorMedia = computed(() => {
-  const medias = coffees.value.map(cafe => cafe.media);
-  const maior = Math.max(...medias);
-  return maior > 0 ? maior.toFixed(1) : "-";
-});
+const ultimaAvaliacao = computed(() => {
+  return coffees.value[coffees.value.length - 1];
+})
 </script>
 
 <template>
@@ -41,14 +39,29 @@ const melhorMedia = computed(() => {
       </div>
 
       <div class="card">
-        <h3>Cafés Avaliados</h3>
-        <p class="numero">{{ cafesAvaliados }}</p>
-        <p>café(s)</p>
+        <h3>Café com Maior Nota</h3>
+        <p class="numero">
+          {{ melhorCafe.media }}
+        </p>
+        <p class="nome-cafe">
+          {{ melhorCafe.nome }}
+        </p>
+        <p class="produtor">
+          {{ melhorCafe.produtor }}
+        </p>
       </div>
 
       <div class="card">
-        <h3>Melhor Média</h3>
-        <p class="numero">{{ melhorMedia }}</p>
+        <h3>Última Avaliação</h3>
+        <p class="numero">
+          {{ ultimaAvaliacao.media }}
+        </p>
+        <p class="nome-cafe">
+          {{ ultimaAvaliacao.nome }}
+        </p>
+        <p class="produtor">
+          {{ ultimaAvaliacao.data }}
+        </p>
       </div>
     </div>
     <div class="acoes">
@@ -135,6 +148,18 @@ h1 {
   font-weight: bold;
   color: #8B5E3C;
   margin: 10px 0 0;
+}
+
+.nome-cafe {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #320d0d;
+}
+
+.produtor {
+  margin-top: 5px;
+  color: #666;
 }
 
 .acoes {

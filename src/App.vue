@@ -44,7 +44,7 @@ import { RouterLink, RouterView } from "vue-router";
 :global(body) {
   margin: 0;
   font-family: system-ui, -apple-system, sans-serif;
-  background: #f8f8f8;
+  background: white;
   color: #333;
 }
 

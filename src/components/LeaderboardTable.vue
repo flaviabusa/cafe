@@ -1,110 +1,118 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 
-defineProps({
-    coffees: Array
-})
-
-function posicao(index) {
-
-    if (index == 0) {
-        return "🥇 1º";
-    }
-
-    if (index == 1) {
-        return "🥈 2º";
-    }
-
-    if (index == 2) {
-        return "🥉 3º";
-    }
-
-    return `${index + 1}º`;
-
-}
-
+defineProps(['coffees'])
 </script>
 
 <template>
-    <div class="ranking">
-        <div class="linha" v-for="(coffee, index) in coffees" :key="coffee.id">
+    <div class="lista-ranking">
+        <div class="item-ranking" v-for="(coffee, index) in coffees" :key="coffee.id">
+            <div class="coluna posicao">
+                <span v-if="index == 0">🥇</span>
 
-            <div class="posicao">
-                {{ posicao(index) }}
+                <span v-else-if="index == 1">🥈</span>
+
+                <span v-else-if="index == 2">🥉</span>
+
+                <span v-else>{{ index + 1 }}º</span>
             </div>
 
-            <div class="informacoes">
-                <h3>{{ coffee.nome }}</h3>
-                <p>{{ coffee.produtor }}</p>
+            <div class="coluna">
+                {{ coffee.nome }}
             </div>
 
-            <div class="media">
-                {{ coffee.media.toFixed(1) }}
+            <div class="coluna">
+                {{ coffee.produtor }}
+            </div>
+
+            <div class="coluna nota">
+                {{ coffee.media }}
+            </div>
+
+            <div class="coluna">
+                <RouterLink :to="`/coffee/${coffee.id}`" class="botao-detalhes">
+                    Ver Detalhes
+                </RouterLink>
             </div>
         </div>
     </div>
-
 </template>
 
 <style scoped>
-
-.ranking {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.linha {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.lista-ranking {
     background: white;
-    padding: 20px;
-    border-radius: 12px;
+    border: 1px solid #ececec;
+    border-top: none;
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
 }
 
+.item-ranking {
+    display: grid;
+    grid-template-columns: 90px 2fr 2fr 1.4fr 150px;
+    align-items: center;
+    padding: 18px 22px;
+    border-bottom: 1px solid #ececec;
+}
+
+.item-ranking:last-child {
+    border-bottom: none;
+}
+
+.coluna {
+    color: #320d0d;
+}
+
 .posicao {
-    width: 90px;
-    font-size: 22px;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #320d0d;
 }
 
-.informacoes {
-    flex: 1;
-}
-
-.informacoes h3 {
-    margin: 0;
-    color: #320d0d;
-}
-
-.informacoes p {
-    margin-top: 5px;
-    color: #777;
-}
-
-.media {
-    font-size: 30px;
+.nota {
     font-weight: bold;
-    color: #8B5E3C;
+    color: #2e7d32;
 }
 
-@media(max-width:768px) {
+.botao-detalhes {
+    padding: 10px 16px;
+    background: white;
+    color: #320d0d;
+    border: 1px solid #320d0d;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
 
-    .linha {
-        flex-direction: column;
-        gap: 15px;
+.botao-detalhes:hover {
+    background: #320d0d;
+    color: white;
+}
+
+/* Tablet */
+@media (max-width:992px) {
+    .lista-ranking {
+        border-top: 1px solid #ececec;
+        border-radius: 14px;
+    }
+
+    .item-ranking {
+        grid-template-columns: 1fr;
+        gap: 12px;
         text-align: center;
     }
 
-    .informacoes {
-        margin: 0;
+    .botao-detalhes {
+        width: 100%;
     }
+}
 
-    .media {
-        font-size: 24px;
+/* Celular */
+@media (max-width:768px) {
+    .item-ranking {
+        padding: 18px;
     }
-
 }
 </style>

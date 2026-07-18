@@ -31,7 +31,7 @@ const routes = [
     },
   },
   {
-    path: '/cafe/:id',
+    path: '/coffee/:id',
     name: 'coffee-details',
     component: CoffeeDetailsView,
     meta: {
