@@ -24,6 +24,12 @@ const media = computed(() => {
     ) / 5
 })
 
+function limitarNota(valor) {
+    if (valor > 10) return 10
+    if (valor < 0) return 0
+    return valor
+}
+
 function limparFormulario() {
     nome.value = ''
     produtor.value = ''
@@ -39,8 +45,10 @@ function limparFormulario() {
 
 function salvarAvaliacao() {
 
-    if (nome.value == '' || produtor.value == '' || avaliador.value == '') {
-        erro.value = 'Preencha todos os campos obrigatórios.'
+    erro.value = ""
+
+    if ( nome.value === "" || produtor.value === "" || avaliador.value === "" ) {
+        erro.value = "Preencha todos os campos obrigatórios."
         return
     }
 
@@ -57,7 +65,7 @@ function salvarAvaliacao() {
         cafeExistente.observacoes = observacoes.value
         cafeExistente.avaliador = avaliador.value
         cafeExistente.data = new Date().toLocaleDateString('pt-BR')
-    } 
+    }
     else {
         coffees.value.push({
             id: coffees.value.length + 1,
@@ -79,50 +87,50 @@ function salvarAvaliacao() {
 </script>
 
 <template>
-    <div class="form-card">
+    <div class="formulario">
 
         <h2>Nova Avaliação</h2>
-        <p class="subtitulo">
-            Cadastre uma nova avaliação de café.
-        </p>
-        <p v-if="erro" class="erro">
-            {{ erro }}
-        </p>
 
-        <label>Nome do Café *</label>
-        <input type="text" placeholder="Ex.: Bourbon Amarelo" v-model="nome">
-
-        <label>Produtor *</label>
-        <input type="text" placeholder="Ex.: Fazenda Boa Vista" v-model="produtor">
+        <div class="informacoes">
+            <div>
+                <label>Nome do Café *</label>
+                <input type="text" placeholder="Ex.: Bourbon Amarelo" v-model="nome">
+            </div>
+            <div>
+                <label>Produtor *</label>
+                <input type="text" placeholder="Ex.: Fazenda Boa Vista" v-model="produtor">
+            </div>
+        </div>
 
         <label>Avaliador *</label>
-        <input type="text" placeholder="Seu nome" v-model="avaliador">
+        <input type="text" v-model="avaliador">
 
-        <h3>Notas SCA</h3>
-        <div class="grid-notas">
+        <h3>Notas SCA (0 a 10)</h3>
+        <div class="notas">
             <div>
                 <label>Aroma</label>
-                <input type="number" min="0" max="10" v-model="aroma">
+                <input type="number" min="0" max="10" v-model="aroma" @input="aroma = limitarNota(Number(aroma))">
             </div>
 
             <div>
                 <label>Sabor</label>
-                <input type="number" min="0" max="10"  v-model="sabor">
+                <input type="number" min="0" max="10" v-model="sabor" @input="sabor = limitarNota(Number(sabor))">
             </div>
 
             <div>
                 <label>Acidez</label>
-                <input type="number" min="0" max="10" v-model="acidez">
+                <input type="number" min="0" max="10" v-model="acidez" @input="acidez = limitarNota(Number(acidez))">
             </div>
 
             <div>
                 <label>Corpo</label>
-                <input type="number" min="0" max="10" v-model="corpo">
+                <input type="number" min="0" max="10" v-model="corpo" @input="corpo = limitarNota(Number(corpo))">
             </div>
 
             <div>
                 <label>Finalização</label>
-                <input type="number" min="0" max="10" v-model="finalizacao">
+                <input type="number" min="0" max="10" v-model="finalizacao"
+                    @input="finalizacao = limitarNota(Number(finalizacao))">
             </div>
         </div>
 
@@ -133,6 +141,10 @@ function salvarAvaliacao() {
             <p>Média SCA</p>
             <h2>{{ media.toFixed(1) }}</h2>
         </div>
+
+        <p v-if="erro" class="erro">
+            {{ erro }}
+        </p>
 
         <div class="botoes">
             <button class="limpar" @click="limparFormulario">
@@ -147,7 +159,7 @@ function salvarAvaliacao() {
 </template>
 
 <style scoped>
-.form-card {
+.formulario {
     background: white;
     padding: 25px;
     border-radius: 12px;
@@ -156,24 +168,14 @@ function salvarAvaliacao() {
 
 h2 {
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: bold;
     color: #320d0d;
-}
-
-.subtitulo {
-    color: #666;
-    margin-bottom: 20px;
-}
-
-.erro {
-    color: red;
-    margin-bottom: 15px;
-    font-size: 14px;
 }
 
 label {
     font-weight: 600;
-    margin-bottom: 6px;
     display: block;
     color: #320d0d;
 }
@@ -192,14 +194,28 @@ textarea {
     resize: none;
 }
 
-.grid-notas {
+.informacoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #320d0d;
+    margin: 25px 0 0 0;
+}
+
+.notas {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.grid-notas div {
+.notas div {
     display: flex;
     flex-direction: column;
 }
@@ -223,6 +239,11 @@ textarea {
     margin: 0;
     color: #320d0d;
     font-size: 26px;
+}
+
+.erro {
+    color: red;
+    margin: 20px 0 20px 0;
 }
 
 .botoes {
@@ -258,18 +279,23 @@ button {
 
 /* Tablet */
 @media (max-width: 992px) {
-    .grid-notas {
+    .notas {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 /* Celular */
 @media (max-width: 768px) {
-    .form-card {
+    .formulario {
         padding: 20px;
     }
 
-    .grid-notas {
+    .informacoes {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .notas {
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -287,5 +313,4 @@ button {
         width: 100%;
     }
 }
-
 </style>

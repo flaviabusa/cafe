@@ -6,18 +6,24 @@ defineProps(['coffees'])
 
 <template>
     <div class="lista-ranking">
-        <div class="item-ranking" v-for="(coffee, index) in coffees" :key="coffee.id">
-            <div class="coluna posicao">
-                <span v-if="index == 0">🥇</span>
+        <div class="item" v-for="(coffee, index) in coffees" :key="coffee.id">
+            <div class="coluna">
+                <span class="posicao" v-if="index == 0">
+                    <img class="podio" src="/primeiro-lugar.png" alt="medalha-primeiro-lugar">
+                </span>
 
-                <span v-else-if="index == 1">🥈</span>
+                <span class="posicao" v-else-if="index == 1">
+                    <img class="podio" src="/segundo-lugar.png" alt="medalha-segundo-lugar">
+                </span>
 
-                <span v-else-if="index == 2">🥉</span>
+                <span class="posicao" v-else-if="index == 2">
+                    <img class="podio" src="/terceiro-lugar.png" alt="medalha-terceiro-lugar">
+                </span>
 
-                <span v-else>{{ index + 1 }}º</span>
+                <span class="posicao" v-else>{{ index + 1 }}º</span>
             </div>
 
-            <div class="coluna">
+            <div class="nome">
                 {{ coffee.nome }}
             </div>
 
@@ -25,11 +31,11 @@ defineProps(['coffees'])
                 {{ coffee.produtor }}
             </div>
 
-            <div class="coluna nota">
+            <div class="nota">
                 {{ coffee.media }}
             </div>
 
-            <div class="coluna">
+            <div>
                 <RouterLink :to="`/coffee/${coffee.id}`" class="botao-detalhes">
                     Ver Detalhes
                 </RouterLink>
@@ -48,7 +54,7 @@ defineProps(['coffees'])
     box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
 }
 
-.item-ranking {
+.item {
     display: grid;
     grid-template-columns: 90px 2fr 2fr 1.4fr 150px;
     align-items: center;
@@ -56,28 +62,41 @@ defineProps(['coffees'])
     border-bottom: 1px solid #ececec;
 }
 
-.item-ranking:last-child {
+.item:last-child {
     border-bottom: none;
 }
 
+.nome {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #320d0ddc;
+}
+
 .coluna {
+    font-size: 1.2rem;
     color: #320d0d;
 }
 
 .posicao {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: bold;
 }
 
+.podio{
+    height: 40px;
+    width: 40px;
+}
+
 .nota {
+    font-size: 1.2rem;
     font-weight: bold;
     color: #2e7d32;
 }
 
 .botao-detalhes {
-    padding: 10px 16px;
+    padding: 8px 12px;
     background: white;
-    color: #320d0d;
+    color: #320d0ddc;
     border: 1px solid #320d0d;
     border-radius: 8px;
     text-decoration: none;
@@ -87,7 +106,7 @@ defineProps(['coffees'])
 }
 
 .botao-detalhes:hover {
-    background: #320d0d;
+    background: #320d0ddc;
     color: white;
 }
 

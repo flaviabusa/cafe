@@ -11,7 +11,6 @@ const ranking = computed(() => {
 <template>
   <main class="ranking">
     <section class="cabecalho">
-
       <div class="titulo">
         <h1> Ranking Geral</h1>
         <p>
@@ -20,71 +19,53 @@ const ranking = computed(() => {
       </div>
 
       <div class="total-cafes">
-
         <h2>Total de Cafés Avaliados</h2>
-
         <p>{{ coffees.length }}</p>
-
       </div>
-
     </section>
 
     <div class="cabecalho-lista">
-
       <span>Posição</span>
-
       <span>Café</span>
-
       <span>Produtor</span>
-
       <span>Nota Final (Média SCA)</span>
-
       <span>Ações</span>
-
     </div>
 
     <LeaderboardTable :coffees="ranking" />
 
     <section class="informacoes">
-
       <h3>Como funciona a pontuação?</h3>
-
-      <p>
-        As notas são baseadas na metodologia SCA (Specialty Coffee Association).
-      </p>
-
-      <p>
-        Cada critério recebe uma nota de 0 a 10 e a média final determina a classificação.
-      </p>
-
+      <p>As notas são baseadas na metodologia SCA (Specialty Coffee Association).</p>
+      <p>Cada critério recebe uma nota de 0 a 10 e a média final determina a classificação.</p>
     </section>
 
   </main>
-
 </template>
 
 <style scoped>
 .ranking {
-  margin: 30px 40px;
+  margin: 30px 40px 30px 40px;
 }
 
 .cabecalho {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 30px;
-  margin-bottom: 30px;
+  align-items: start;
+  margin-bottom: 45px;
 }
 
 .titulo h1 {
   margin: 0;
   font-size: 2rem;
-  color: #320d0d;
+  font-weight: bold;
+  color: #320d0ddc;
 }
 
 .titulo p {
-  margin-top: 10px;
-  color: #666;
+  font-size: 1.2rem ;
+  font-weight: 600;
+  color: #320d0ddc;
 }
 
 .total-cafes {
@@ -93,19 +74,20 @@ const ranking = computed(() => {
   border: 1px solid #ececec;
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
-  padding: 20px;
+  padding: 10px 20px;
   text-align: center;
 }
 
 .total-cafes h2 {
   margin: 0;
-  font-size: 1.1rem;
-  color: #320d0d;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #320d0dce;
 }
 
 .total-cafes p {
-  margin-top: 12px;
-  font-size: 3rem;
+  margin-top: 8px;
+  font-size: 2.5rem;
   font-weight: bold;
   color: #320d0d;
 }
@@ -114,37 +96,44 @@ const ranking = computed(() => {
   display: grid;
   grid-template-columns: 90px 2fr 2fr 1.4fr 150px;
   padding: 18px 22px;
-  background: white;
+  background: #ececec52;
   border: 1px solid #ececec;
   border-bottom: none;
   border-radius: 14px 14px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+}
+.cabecalho-lista span{
+  font-size: 1.2rem;
   font-weight: 600;
   color: #320d0d;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
 }
 
 .informacoes {
-  margin-top: 35px;
+  margin-top: 45px;
+  margin-bottom: 45px;
   background: #ede8d0;
-  border: 1px solid #ececec;
+  border: 1px solid #ede8d0;
   border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
-  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+  padding: 30px;
 }
 
 .informacoes h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
   margin-top: 0;
   margin-bottom: 12px;
   color: #320d0d;
 }
 
 .informacoes p {
-  color: #666;
+  color: #320d0dce;
+  font-size: 1.2rem;
+  font-weight: 500;
   line-height: 1.7;
 }
 
 /* Tablet */
-
 @media(max-width:992px) {
   .ranking {
     margin: 25px;
@@ -157,6 +146,7 @@ const ranking = computed(() => {
 
   .total-cafes {
     width: auto;
+    margin-top: 20px;
   }
 
   .cabecalho-lista {
@@ -165,7 +155,6 @@ const ranking = computed(() => {
 }
 
 /* Celular */
-
 @media(max-width:768px) {
   .ranking {
     margin: 15px;
@@ -175,8 +164,12 @@ const ranking = computed(() => {
     font-size: 1.7rem;
   }
 
-  .total-cafes p {
-    font-size: 2.3rem;
+  .total-cafes {
+    margin-top: 20px;
+  }
+
+  .cabecalho-lista {
+    display: none;
   }
 }
 </style>

@@ -3,12 +3,9 @@ import { RouterLink } from "vue-router";
 </script>
 
 <template>
-
     <section class="not-found">
         <h1>Erro 404</h1>
-        <p>
-            Ops! A página que você tentou acessar não existe.
-        </p>
+        <p>Ops! A página que você tentou acessar não existe.</p>
 
         <RouterLink to="/" class="botao">
             Voltar para a Home
@@ -57,7 +54,6 @@ p {
 /* Tablet */
 
 @media(max-width:992px) {
-
     h1 {
         font-size: 2.5rem;
     }
@@ -75,7 +71,6 @@ p {
 /* Celular */
 
 @media(max-width:768px) {
-
     h1 {
         font-size: 2rem;
     }

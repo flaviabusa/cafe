@@ -12,6 +12,7 @@ const melhorCafe = computed(() => {
 const ultimaAvaliacao = computed(() => {
   return coffees.value[coffees.value.length - 1];
 })
+
 </script>
 
 <template>
@@ -24,7 +25,7 @@ const ultimaAvaliacao = computed(() => {
       </div>
       <div class="texto-banner">
         <h1>Campeonato de Avaliação de Qualidade de Café</h1>
-        <p class="descricao">
+        <p>
           Avalie, compare e descubra os melhores cafés especiais
         </p>
       </div>
@@ -35,7 +36,7 @@ const ultimaAvaliacao = computed(() => {
       <div class="card">
         <h3>Total de Cafés</h3>
         <p class="numero">{{ totalCafes }}</p>
-        <p>café(s)</p>
+        <p class="cafes">Cafés</p>
       </div>
 
       <div class="card">
@@ -69,14 +70,14 @@ const ultimaAvaliacao = computed(() => {
         Ver Avaliações
       </RouterLink>
 
-      <RouterLink to="/ranking" class="botao botao-secundario">
+      <RouterLink to="/ranking" class="botao">
         Ver Ranking
       </RouterLink>
     </div>
 
     <div class="aviso">
       <p>
-        <img src="/megafone-home.png" alt="megafone-home" class="img-aviso">
+        <img src="/megafone-home.png" alt="megafone" class="img-aviso">
       </p>
       <div>
         <h2>Participe e faça a diferença!</h2>
@@ -109,14 +110,14 @@ const ultimaAvaliacao = computed(() => {
   margin-left: 50px;
 }
 
-h1 {
+.texto-banner h1 {
   font-size: 3.5rem;
   font-weight: 600;
   color: #320d0d;
   margin-bottom: 5px;
 }
 
-.descricao {
+.texto-banner p {
   font-size: 1.5rem;
   color: #353535;
   margin-bottom: 35px;
@@ -132,13 +133,15 @@ h1 {
 .card {
   background: white;
   border-radius: 12px;
-  padding: 50px 15px 50px 15px;
+  padding: 30px 15px 30px 15px;
   text-align: center;
+  border: 1px solid #ececec;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
 }
 
 .card h3 {
   font-size: 1.5rem;
+  font-weight: 600;
   margin-top: 0;
   color: #320d0d;
 }
@@ -152,13 +155,20 @@ h1 {
 
 .nome-cafe {
   margin-top: 10px;
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-weight: 600;
   color: #320d0d;
 }
 
+.cafes{
+  margin-top: 5px;
+  font-size: 20px;
+  color: #666; 
+}
+
 .produtor {
   margin-top: 5px;
+  font-size: 20px;
   color: #666;
 }
 
@@ -170,6 +180,7 @@ h1 {
 }
 
 .botao {
+  font-size: 18px;
   background: #320d0dc6;
   color: white;
   text-decoration: none;
@@ -183,13 +194,6 @@ h1 {
   background: #2a0b0b;
 }
 
-.botao-secundario {
-  background: #8B5E3C;
-}
-
-.botao-secundario:hover {
-  background: #744a2f;
-}
 
 .aviso {
   background-color: #ede8d0;
@@ -215,7 +219,7 @@ h1 {
 }
 
 .aviso p {
-  font-size: 1.2rem;
+  font-size: 20px;
   color: #320d0d;
   margin: 0;
 }
@@ -239,11 +243,11 @@ h1 {
     width: 280px;
   }
 
-  h1 {
+  .texto-banner h1 {
     font-size: 2.5rem;
   }
 
-  .descricao {
+  .texto-banner p {
     font-size: 1.2rem;
     margin-bottom: 0;
   }
@@ -273,7 +277,6 @@ h1 {
 }
 
 /* Celular */
-
 @media (max-width:768px) {
 
   .banner {

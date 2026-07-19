@@ -37,11 +37,12 @@ import RatingForm from '@/components/RatingForm.vue'
 .lista-cafes h2{
   font-size: 2rem;
   color: #320d0ddc;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .lista-cafes p{
   color:#320d0ddc ;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 40px;
 }

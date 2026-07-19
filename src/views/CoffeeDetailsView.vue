@@ -11,10 +11,6 @@ const coffee = coffees.value.find(coffee => coffee.id == route.params.id)
     <main>
         <div v-if="coffee" class="detalhes">
 
-            <RouterLink to="/ranking" class="voltar">
-                ← Voltar ao Ranking
-            </RouterLink>
-
             <h1>{{ coffee.nome }}</h1>
 
             <p class="produtor">
@@ -56,7 +52,7 @@ const coffee = coffees.value.find(coffee => coffee.id == route.params.id)
             </div>
 
             <div class="informacoes">
-            
+
                 <div>
                     <h3>Observações</h3>
                     <p>{{ coffee.observacoes }}</p>
@@ -72,6 +68,12 @@ const coffee = coffees.value.find(coffee => coffee.id == route.params.id)
                     <p>{{ coffee.avaliador }}</p>
                 </div>
             </div>
+            <div class="botao-voltar">
+                <RouterLink to="/ranking" class="voltar">
+                    Voltar ao Ranking
+                </RouterLink>
+            </div>
+
         </div>
 
         <div v-else class="erro">
@@ -100,17 +102,6 @@ const coffee = coffees.value.find(coffee => coffee.id == route.params.id)
     padding: 35px;
 }
 
-.voltar {
-    display: inline-block;
-    margin-bottom: 25px;
-    color: #320d0d;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.voltar:hover {
-    color: #320d0da8;
-}
 
 h1 {
     margin: 0;
@@ -184,6 +175,24 @@ h1 {
     margin: 0;
     color: #666;
     line-height: 1.6;
+}
+
+.botao-voltar {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.voltar {
+    padding: 10px 40px;
+    background-color: #320d0dc6;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.voltar:hover{
+    background-color: #2a0b0b;
 }
 
 .erro {

@@ -1,8 +1,8 @@
 <template>
   <header class="navbar">
     <div class="logo">
-      <img src="/grao-de-cafe.png" alt="grao-de-cafe" />
-      Coffee Quality Challenge
+      <img src="/cafe-header.png" alt="grao-de-cafe" />
+      <p>Coffee Quality Challenge</p>
     </div>
 
     <nav class="nav-links">
@@ -17,20 +17,20 @@
   </main>
 
   <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-left">
+    <div class="conteudo-footer">
+      <div class="esquerda-footer">
         <h2>Coffee Quality Challenge</h2>
         <p>Descobrindo e valorizando os melhores cafés especiais.</p>
       </div>
 
-      <div class="footer-right">
+      <div class="direita-footer">
         <p>contato@coffeequality.com</p>
       </div>
     </div>
 
     <hr />
 
-    <p class="copyright">
+    <p class="direitos">
       © 2025 Coffee Quality Challenge. Todos os direitos reservados.
     </p>
   </footer>
@@ -66,14 +66,18 @@ import { RouterLink, RouterView } from "vue-router";
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #320d0dc6;
 }
 
 .logo img {
-  width: 26px;
+  width: 48px;
+  height: 48px;
+  margin: 0;
+}
+
+.logo p{
+  font-size: 24px;
+  font-weight: bold;
+  color: #320d0dc6;
 }
 
 .nav-links {
@@ -97,32 +101,32 @@ import { RouterLink, RouterView } from "vue-router";
 .footer{
   background:#320d0dc6;
   color:white;
-  padding:35px 50px 15px;
+  padding:35px 50px 15px 50px;
 }
 
-.footer-content{
+.conteudo-footer{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
   gap:40px;
 }
 
-.footer-left h2{
+.esquerda-footer h2{
   margin:0;
   font-size:24px;
 }
 
-.footer-left p{
+.esquerda-footer p{
   margin-top:8px;
   font-size:15px;
   color:#ddd;
 }
 
-.footer-right{
+.direita-footer{
   text-align:right;
 }
 
-.footer-right p{
+.direita-footer p{
   margin:0;
   font-size:16px;
   color:#ddd;
@@ -134,7 +138,7 @@ import { RouterLink, RouterView } from "vue-router";
   border-top:1px solid rgba(255,255,255,.2);
 }
 
-.copyright{
+.direitos{
   text-align:center;
   font-size:12px;
   color:#d2d2d2;
@@ -169,14 +173,14 @@ import { RouterLink, RouterView } from "vue-router";
     padding:30px 20px 15px;
   }
 
-  .footer-content{
+  .conteudo-footer{
     flex-direction:column;
     align-items:center;
     text-align:center;
     gap:20px;
   }
 
-  .footer-right{
+  .direita-footer{
     text-align:center;
   }
 
